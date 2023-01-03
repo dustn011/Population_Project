@@ -6,3 +6,4 @@ birth=c.execute("SELECT *FROM population.korea_birth")
 birth1=c.fetchall()
 for i in birth1:
     print(i)
+conn.close()
