@@ -1,6 +1,5 @@
 import pymysql
 import sys
-import matplotlib.pyplot as plt
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
@@ -62,12 +61,12 @@ class Birth_Rate(QWidget, form_class): # 클래스 선언 Birth_Rate
     def second_year(self): #year2_comboBox item 추가
         self.year2_comboBox.clear() # 콤보박스 클리어
         add_year=[]
-        self.item_list = ['2000년', '2001년', '2002년', '2003년', '2004년', '2005년', '2006년', '2007년', '2008년', '2009년', '2010년',
+        item_list = ['2000년', '2001년', '2002년', '2003년', '2004년', '2005년', '2006년', '2007년', '2008년', '2009년', '2010년',
                 '2011년', '2012년','2013년', '2014년', '2015년', '2016년', '2017년', '2018년', '2019년', '2020년', '2021년']
-        for i in self.item_list:
-            if self.year1_comboBox.currentText()[2:4]< i[2:4]: # year1_comboBox.currentText() 보다 큰 연도
+        for i in item_list:
+            if self.year1_comboBox.currentText()[2:4]< i[2:4]: # year1_comboBox.currentText() 보다 큰 연도  year2_comboBoxd items 추가
                 add_year.append(i)
-        self.year2_comboBox.addItems(add_year)   # year2_comboBoxd items 추가
+        self.year2_comboBox.addItems(add_year)
 
 
     def searching(self): # 검색 버튼 눌렀을때 메소드
@@ -91,49 +90,31 @@ class Birth_Rate(QWidget, form_class): # 클래스 선언 Birth_Rate
         searching_city=[]
         searching_year=[]
         searching_rate=[]
-        col_list=['도시명']
-        row_list=[]
 
 
         for j in self.birth[0]:
             if j != '시군구별':
                 num=int(j)  # 스트링 인트형으로
                 year_num=int(self.word2[0:4]) #스트링 --> 인트형
-                # print(num)
+                print(num)
                 if year_num == num:
+
                     searching_year.append(year_num)
         for k in self.birth:
             if self.word1 in k[0]:
                 searching_city.append(self.word1)
-        # print(searching_city)
 
 
         for l in info:
             print(l)
             searching_rate.append(l[int(self.word2[2:4])+1:int(self.word3[2:4])+2]) # 비교 연도 사이 합계출산율
 
-        # for o in self.birth:
-        #     if self.word1 in o[0]:
-        #         row_list.append(o)
-        #         row_list=set(row_list)
-        # self.birth_Widget.setVerticalHeaderLabels(row_list)
+
+
+
 
         print(searching_city,searching_year,searching_rate)
-        # print(searching_rate[0][1])
-        print(searching_rate[0])
-        self.birth_Widget.setRowCount(1) # 행 개수
-        self.birth_Widget.setColumnCount(len(searching_rate[0])+1) # 컬럼 개수
-        self.birth_Widget.setItem(0,0, QTableWidgetItem(searching_city[0])) # 도시명
 
-        for m in range(int(self.word2[0:4]), int(self.word3[0:4]) + 1): # col name 들어갈 연도 범위
-            col_list.append(str(m))
-        print(col_list)
-        self.birth_Widget.setHorizontalHeaderLabels(col_list) # col 항목명 세팅
-        for n in range(1,len(searching_rate[0])+1):
-            self.birth_Widget.setItem(0,n,QTableWidgetItem(str(searching_rate[0][n-1])))
-
-        plt.plot(col_list[1:],searching_rate[0])
-        plt.show()
 
 
         #         self.word2=int(self.word2)
