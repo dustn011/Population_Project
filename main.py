@@ -1,6 +1,9 @@
 import pymysql
 import sys
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.rcParams['font.family'] ='Malgun Gothic'
+matplotlib.rcParams['axes.unicode_minus'] =False
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
@@ -132,6 +135,8 @@ class Birth_Rate(QWidget, form_class): # 클래스 선언 Birth_Rate
         for n in range(1,len(searching_rate[0])+1):
             self.birth_Widget.setItem(0,n,QTableWidgetItem(str(searching_rate[0][n-1])))
 
+        #그래프
+        plt.title(self.word1+' '+"출산율")
         plt.plot(col_list[1:],searching_rate[0])
         plt.show()
 
