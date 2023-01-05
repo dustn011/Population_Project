@@ -172,7 +172,7 @@ class Birth_Rate(QWidget, form_class): # 클래스 선언 Birth_Rate
         for i in self.birth:
             if self.word1 in i[0]:
                 searching_city.append(self.word1)
-        # print(searching_city)
+        print(searching_city)
 
 
         for j in info:
