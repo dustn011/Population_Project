@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>984</width>
+    <height>379</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QStackedWidget" name="chartorgraph">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>10</y>
+     <width>591</width>
+     <height>341</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="page">
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>60</y>
+       <width>521</width>
+       <height>251</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="test_graph"/>
+    </widget>
+    <widget class="QPushButton" name="chart_see">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>20</y>
+       <width>81</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>표로 보기</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_2">
+    <widget class="QTableWidget" name="old_chart">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>531</width>
+       <height>261</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="graph_see">
+     <property name="geometry">
+      <rect>
+       <x>460</x>
+       <y>20</y>
+       <width>91</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>그래프로 보기</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="add_btn">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>20</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>추가</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="change_btn">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>20</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>수정</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="del_btn">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>20</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>삭제</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>38</x>
+       <y>254</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>노년부양비</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>38</x>
+       <y>274</y>
+       <width>101</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>유소년부양비</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>38</x>
+       <y>294</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>총부양비</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="add_edit">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>111</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>해당 지역 추가 </string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QComboBox" name="rate_test">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>120</y>
+     <width>191</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>전국</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>서울특별시</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>부산광역시</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>대구광역시</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>인천광역시</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>광주광역시</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>대전광역시</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>울산광역시</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>세종특별자치시</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>경기도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>강원도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>충청북도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>충청남도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>전라북도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>전라남도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>경상북도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>경상남도</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>제주특별자치도</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="search_btn">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>220</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>검색</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="first_year">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>170</y>
+     <width>76</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>2000</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2001</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2002</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2003</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2004</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2005</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2006</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2007</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2008</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2009</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2010</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2011</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2012</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2013</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2014</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2015</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2016</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2017</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2018</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2019</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2020</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2021</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>170</y>
+     <width>21</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>~</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="last_year">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>170</y>
+     <width>76</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>2000</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2001</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2002</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2003</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2004</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2005</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2006</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2007</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2008</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2009</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2010</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2011</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2012</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2013</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2014</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2015</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2016</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2017</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2018</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2019</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2020</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2021</string>
+    </property>
+   </item>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
