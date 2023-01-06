@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>80</y>
+     <y>20</y>
      <width>741</width>
      <height>151</height>
     </rect>
@@ -26,48 +26,38 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;대한민국 2000~2022 합계출산율&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;대한민국 2000~2021 합계출산율&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QComboBox" name="city_comboBox">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>50</x>
      <y>250</y>
      <width>191</width>
      <height>31</height>
     </rect>
    </property>
+   <item>
+    <property name="text">
+     <string>도시선택</string>
+    </property>
+   </item>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QTableWidget" name="birth_Widget">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>320</y>
-     <width>311</width>
-     <height>81</height>
+     <x>40</x>
+     <y>300</y>
+     <width>761</width>
+     <height>91</height>
     </rect>
    </property>
-   <column>
-    <property name="text">
-     <string>도시</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>연도</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>합계출산율</string>
-    </property>
-   </column>
   </widget>
-  <widget class="QComboBox" name="year_comboBox">
+  <widget class="QComboBox" name="year1_comboBox">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>270</x>
      <y>250</y>
      <width>181</width>
      <height>31</height>
@@ -77,7 +67,7 @@
   <widget class="QPushButton" name="searching_btn">
    <property name="geometry">
     <rect>
-     <x>760</x>
+     <x>690</x>
      <y>250</y>
      <width>91</width>
      <height>31</height>
@@ -85,6 +75,131 @@
    </property>
    <property name="text">
     <string>검색</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="year2_comboBox">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>250</y>
+     <width>171</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>430</y>
+     <width>761</width>
+     <height>381</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="graph_verticalLayout"/>
+  </widget>
+  <widget class="QPushButton" name="add_button">
+   <property name="geometry">
+    <rect>
+     <x>1050</x>
+     <y>290</y>
+     <width>61</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>추가</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="modify_button">
+   <property name="geometry">
+    <rect>
+     <x>1050</x>
+     <y>330</y>
+     <width>61</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>수정</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="del_button">
+   <property name="geometry">
+    <rect>
+     <x>1050</x>
+     <y>370</y>
+     <width>61</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>삭제</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="modify_year">
+   <property name="geometry">
+    <rect>
+     <x>900</x>
+     <y>330</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>0000년</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="modify_birth">
+   <property name="geometry">
+    <rect>
+     <x>970</x>
+     <y>330</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>합계출산율</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="modify_city">
+   <property name="geometry">
+    <rect>
+     <x>810</x>
+     <y>330</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>도시입력</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="add_city">
+   <property name="geometry">
+    <rect>
+     <x>970</x>
+     <y>290</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>도시입력</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="del_city">
+   <property name="geometry">
+    <rect>
+     <x>970</x>
+     <y>370</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>도시입력</string>
    </property>
   </widget>
  </widget>
