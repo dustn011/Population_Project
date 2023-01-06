@@ -3,69 +3,73 @@ import sys
 import matplotlib.pyplot as plt
 import copy
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib
-matplotlib.rcParams['font.family'] ='Malgun Gothic'
-matplotlib.rcParams['axes.unicode_minus'] =False
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib import font_manager, rc
-
-from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
-from PyQt5 import uic, QtWidgets
 
-
+matplotlib.rcParams['font.family'] ='Malgun Gothic'
+matplotlib.rcParams['axes.unicode_minus'] =False
 
 # ui 클래스
-form_class = uic.loadUiType("population_main.ui")[0]
+form_class = uic.loadUiType("ui/population_main.ui")[0]
 
 
-class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
+class Population_Db(QWidget, form_class):   # 클래스 선언 Population_Db
     def __init__(self):
         super().__init__()
         self.setupUi(self)
 
-
-        #qt에 그래프 넣기
+        # --------------------------- 지혁 ---------------------------
+        # 그래프 설정 (지혁)
         self.pic = plt.Figure()
         self.picture = FigureCanvas(self.pic)
         self.graph_verticalLayout.addWidget(self.picture)
         self.ax = self.pic.add_subplot(111)
 
-
-
-
-        conn = pymysql.connect(host='10.10.21.105', user='TT1', password='0000', db='population', charset='utf8') # MY SQL 데이터 불러옴
+        # MYSQL 데이터 불러옴(지혁)
+        conn = pymysql.connect(host='10.10.21.105', user='TT1', password='0000', db='population', charset='utf8')
         c = conn.cursor()
-        c.execute("SELECT *FROM population.korea_birth") # korea_birth 조회
+        c.execute("SELECT * FROM population.test_table")     # korea_birth table 조회
 
         self.birth = c.fetchall()
-        for i in self.birth:
-            print(i)
 
         conn.commit()
         conn.close()
 
-
-        self.city_list = [] #city_list 선언
+        # 도시 이름을 넣어줄 city_list 선언(지혁)
+        self.city_list = []
+        # DB에서 가져온 (튜플형식의)데이터 for문으로 한 줄씩 뽑음
         for i in self.birth:
             self.city_list.append(i[0]) # city_list에 도시이름 추가
-        del self.city_list[0:2] # 시군구별 항목 삭제
+        # 시군구별 항목 삭제
+        del self.city_list[0:2]
 
-        # 시그널
-        self.city_comboBox.addItems(self.city_list) # 콤보박스 아이템 추가
+        # ui 시그널(지혁)
+        # 콤보박스 아이템 추가
+        self.city_comboBox.addItems(self.city_list)
+
+        # 도시 콤보박스 텍스트 바뀌면 함수 실행
         self.city_comboBox.currentTextChanged.connect(self.year_first)
+
+        # 연도 콤보박스 바뀌면 함수 실행
         self.year1_comboBox.currentTextChanged.connect(self.second_year)
+
+        # 검색 버튼 누르면 함수 실행
         self.searching_btn.clicked.connect(self.searching)
+
+        # 추가 버튼 누르면 함수 실행
         self.add_button.clicked.connect(self.add_data)
+
+        # 수정 버튼 누르면 함수 실행
         self.modify_button.clicked.connect(self.modify_data)
+
+        # 삭제 버튼 누르면 함수 실행
         self.del_button.clicked.connect(self.del_data)
 
-
-##### ####### 연수zxc
-        # ---------- 그래프 캔버스 ----------
-
+        # --------------------------- 연수 ---------------------------
+        # 그래프 설정 (연수)
         self.fig = plt.Figure()
         self.canvas = FigureCanvas(self.fig)
 
@@ -79,8 +83,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         rc('font', family=font)
 
         # 이거 어떻게 쓰는지 알아버렸음~ 설명하긴 귀찮고 링크 첨부함^^
-        # http://daplus.net/python-matplotlib%EC%97%90%EC%84%9C-%EC%9D%B8%EC%88%98%EA%B0%80-fig-add_subplot-111%EC%9D%98-%EC%9D%98%EB%AF%B8%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9E%85%EB%8B%88%EA%B9%8C/
-        self.world_graph = self.fig.add_subplot(111)   ## 수정
+        self.world_graph = self.fig.add_subplot(111)
 
         # ---------- ui 시그널 ----------
 
@@ -118,23 +121,35 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
 
         # 추가 버튼 (누르면 라인에디트에 있는 텍스트 데이터에 추가)
         self.btn_worldAdd.clicked.connect(self.worldAdd)
-        # self.led_worldAdd.returnPressed.connect(self.worldAdd)
 
-######### 시혇############
+        # --------------------------- 시형 ---------------------------
+
+        # 그래프 설정
         self.fig1 = plt.Figure()
         self.canvas1 = FigureCanvas(self.fig1)
         self.test_graph.addWidget(self.canvas1)
         self.gra = self.fig1.add_subplot(111)
+
+        # ui 시그널
+        # 검색 버튼 누르면 함수 실행
         self.search_btn.clicked.connect(self.graph_search)
+
+        # 그래프로 보기 버튼 누르면 함수 실행
         self.graph_see.clicked.connect(self.graph_screen)
+
+        # 표로보기 버튼 누르면 함수 실행
         self.chart_see.clicked.connect(self.chart_screen)
+
+        # 추가 버튼 누르면 함수 실행
         self.add_btn.clicked.connect(self.add_motion)
+
+        # 수정 버튼 누르면 함수 실행
         self.change_btn.clicked.connect(self.change_motion)
+
+        # 삭제 버튼 누르면 함수 실행
         self.del_btn.clicked.connect(self.del_motion)
 
-
-############# 지혁 메소드#####################
-
+    # --------------------------- 지혁 ---------------------------
     def add_data(self):
         addcity_name = self.add_city.text()
         print(addcity_name)
@@ -149,9 +164,8 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
             c.execute(sql)
             conn.commit()
             conn.close()
-            self.city_list.append(addcity_name) #추가한 도시명 self.city_list에 append
+            self.city_list.append(addcity_name) # 추가한 도시명 self.city_list에 append
             self.city_comboBox.addItems(self.city_list)  # 콤보박스에 추가한 행 도시명 아이템 추가
-
 
     def modify_data(self):
         city_name=self.modify_city.text()
@@ -160,7 +174,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         print(city_name)
         print(year)
         print(birth_rate)
-        if city_name =='' or year =='' or birth_rate =='':
+        if city_name == '' or year == '' or birth_rate == '':
             pass
         else:
             conn = pymysql.connect(host='10.10.21.105', user='TT1', password='0000', db='population', charset='utf8') # MY SQL 데이터 불러옴
@@ -185,20 +199,18 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
             c.execute(sql)
             conn.commit()
             conn.close()
-        self.city_comboBox.clear() ## 클리어 안해주면 추가했던 도시명이 남아 있게 되서 클리어 해좀 ...
+        self.city_comboBox.clear() # 클리어 안해주면 추가했던 도시명이 남아 있게 되서 클리어 해줌
         self.city_list.remove(delcity_name)
         self.city_comboBox.addItems(self.city_list)  # 콤보박스에 삭제한 행 도시명 아이템에서 삭제
 
-
-    def year_first(self): #year1_comboBox items 추가
-        if self.city_comboBox.currentText()=="도시선택": #city 콥보박스에 도시선택이면 연도선택 안되게 하려고
+    def year_first(self): # year1_comboBox items 추가
+        if self.city_comboBox.currentText()=="도시선택": # city 콤보박스에 도시선택이면 연도선택 안되게 하려고
             self.year1_comboBox.clear()
         else:
             self.year1_comboBox.addItems(['2000년', '2001년', '2002년', '2003년', '2004년', '2005년', '2006년', '2007년', '2008년', '2009년', '2010년', '2011년', '2012년',
                                      '2013년', '2014년', '2015년', '2016년', '2017년', '2018년', '2019년', '2020년', '2021년'])
 
-
-    def second_year(self): #year2_comboBox item 추가
+    def second_year(self): # year2_comboBox item 추가
         if self.city_comboBox.currentText() == "도시선택":
             self.year2_comboBox.clear()
         else:
@@ -211,10 +223,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
                     add_year.append(i)
             self.year2_comboBox.addItems(add_year)   # year2_comboBoxd items 추가
 
-
-    def searching(self): # 검색 버튼 눌렀을때 메소드
-
-
+    def searching(self):    # 검색 버튼 눌렀을때 메소드
         # 콤보박스 현재 텍스트 변수지정
         self.word1 = self.city_comboBox.currentText()
         self.word2 = self.year1_comboBox.currentText()
@@ -228,7 +237,6 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         self.info = c.fetchall()
         c.execute("SELECT *FROM population.korea_birth WHERE 시군구별 = '전국'") #self.city_comboBox.currentText()가 전국인 테이터 조회
         city_avg=c.fetchall()
-        print(self.info)
         conn.commit()
         conn.close()
 
@@ -238,46 +246,28 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         allcity_rate=[]
         self.col_list=['도시명']
 
-
-
         for i in self.city_list:
-            print(i)
             if self.word1 in i:
                 searching_city.append(self.word1)
 
-
-
         for j in self.info:
-            print(j)
             searching_rate.append(j[int(self.word2[2:4])+1:int(self.word3[2:4])+2]) # 비교 연도 사이 합계출산율
         for k in city_avg:
             allcity_rate.append(k[int(self.word2[2:4])+1:int(self.word3[2:4])+2]) # 비교연도 전국 합계출산율
-        print('choi',allcity_rate)
-
-
-        print(searching_city,searching_rate)
-        print(searching_rate[0])
-
-
 
         self.birth_Widget.setRowCount(2) # 행 개수
         self.birth_Widget.setColumnCount(len(searching_rate[0])+1) # 컬럼 개수
         self.birth_Widget.setItem(0,0, QTableWidgetItem(searching_city[0])) # 도시명
         self.birth_Widget.setItem(1,0, QTableWidgetItem("전국"))
 
-
         for l in range(int(self.word2[0:4]), int(self.word3[0:4]) + 1): # col name 들어갈 연도 범위
             self.col_list.append(str(l)+'년')
-        print(self.col_list)
+
         self.birth_Widget.setHorizontalHeaderLabels(self.col_list) # col 항목명 세팅
+
         for m in range(1,len(searching_rate[0])+1):# 각 셀에 해당 연도 합계출산율 출력
             self.birth_Widget.setItem(0,m,QTableWidgetItem(str(searching_rate[0][m-1])))
             self.birth_Widget.setItem(1,m,QTableWidgetItem(str(allcity_rate[0][m-1])))
-
-
-
-
-
 
         self.ax.cla()  # Clear the current figure
 
@@ -287,7 +277,6 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         s=self.col_list[1:]
         t=allcity_rate[0]
 
-
         self.ax.plot(x, y, label=self.word1)
         self.ax.plot(s,t, label="전국")
 
@@ -295,7 +284,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         self.ax.legend()
         self.picture.draw()
 
-############# 연수 메소드 #################
+    # --------------------------- 연수 ---------------------------
     # 국가 추가하기 함수
     def worldAdd(self):
         # row추가할 국가명 저장
@@ -307,7 +296,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         cur = conn.cursor()
 
         # 국가명이 **인 row를 만들고 싶어
-        sql = f"INSERT INTO popu_test (국가별) VALUES ('{add_country}')"
+        sql = f"INSERT INTO popu_grow (국가별) VALUES ('{add_country}')"
 
         # execute 메서드로 db에 sql 문장 전송
         cur.execute(sql)
@@ -364,7 +353,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
                 cur = conn.cursor()
 
                 # 국가명은 **이고 컬럼은 ****연도인 값에 바꿀 값을 넣고 수정할래
-                sql = f"UPDATE popu_test SET {column_name} = {changeData_value} WHERE 국가별 = '{country_name}'"
+                sql = f"UPDATE popu_grow SET {column_name} = {changeData_value} WHERE 국가별 = '{country_name}'"
 
                 # execute 메서드로 db에 sql 문장 전송
                 cur.execute(sql)
@@ -413,7 +402,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
             cur = conn.cursor()
 
             # 국가명은 **이고 컬럼은 ****연도인 값에 null을 넣고 삭제했다고 표시할래
-            sql = f"UPDATE popu_test SET {column_name} = null WHERE 국가별 = '{country_name}'"
+            sql = f"UPDATE popu_grow SET {column_name} = null WHERE 국가별 = '{country_name}'"
 
             # execute 메서드로 db에 sql 문장 전송
             cur.execute(sql)
@@ -564,7 +553,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         cur = src.cursor()
 
         # db로 전송할 문장 작성
-        sqltxt = f'SELECT 국가별, {toaddtx} FROM popu_test where (국가별 = "{self.cty1}" or 국가별 = "{self.cty2}")'
+        sqltxt = f'SELECT 국가별, {toaddtx} FROM popu_grow where (국가별 = "{self.cty1}" or 국가별 = "{self.cty2}")'
         # excute 메서드로 db에 sql 문장 전송
         cur.execute(sqltxt)
 
@@ -616,7 +605,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         cur = src.cursor()
 
         # excute 메서드로 db에 sql 문장 전송
-        cur.execute(f"SELECT 국가별 FROM popu_test where 국가별 like '%{search_word}%'")
+        cur.execute(f"SELECT 국가별 FROM popu_grow where 국가별 like '%{search_word}%'")
         # 전체 나열 함수, 레코드를 배열(튜플) 형식으로 저장해준다(fetch : 나열하다 정렬하다)
         searched = cur.fetchall()
         src.close()
@@ -651,7 +640,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         cur = src.cursor()
 
         # excute 메서드로 db에 sql 문장 전송
-        cur.execute(f"SELECT 국가별 FROM popu_test where 국가별 like '%{search_word}%'")
+        cur.execute(f"SELECT 국가별 FROM popu_grow where 국가별 like '%{search_word}%'")
         # 전체 나열 함수, 레코드를 배열(튜플) 형식으로 저장해준다(fetch : 나열하다 정렬하다)
         searched = cur.fetchall()
 
@@ -675,15 +664,15 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         else:
             self.country2.setText(country)
 
-    ########## 시형 메소드 ###################
-
-
+    # --------------------------- 시형 ---------------------------
     # 그래프화면으로 넘어감
     def graph_screen(self):
         self.chartorgraph.setCurrentIndex(0)
+
     # 표화면으로 넘어감
     def chart_screen(self):
         self.chartorgraph.setCurrentIndex(1)
+
     # 검색하면 실행
     def graph_search(self):
         self.region = self.rate_test.currentText()               # 지역에 해당하는 항복별로 그리기 위해
@@ -746,7 +735,6 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         self.rate_test.addItem(add_region)
         self.tableSet()
 
-
     def del_motion(self):
         selected_cell = self.old_chart.currentItem().text()     # 선택한 셀의 내용을 찾고
         selected_row = self.old_chart.currentRow()              # 로우도 구한다
@@ -804,7 +792,6 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
             else:
                 QMessageBox.information(self, "에러", "데이터를 선택해주세요")
 
-
     def tableSet(self):
         conn = pymysql.connect(host='10.10.21.105', user='test', password='0000', db='population', charset='utf8')
         cur = conn.cursor()
@@ -834,7 +821,6 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         self.insert_year += year_list[fir_year:sec_year + 1]
         self.old_chart.setColumnCount(len(self.insert_year))
         self.old_chart.setHorizontalHeaderLabels(self.insert_year)
-
 
 
 if __name__ == "__main__":
