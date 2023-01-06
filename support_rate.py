@@ -6,12 +6,12 @@ from matplotlib import font_manager, rc
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5 import uic, QtWidgets
 
-#ㄴㅁㅇㅁㅈㄴㅁㅇㄴㅁㅇ
+# sdf
 font_path = "C:\\Windows\\Fonts\\gulim.ttc"
 font = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font)
 
-form_class = uic.loadUiType("graph_test.ui")[0]
+form_class = uic.loadUiType("population_main.ui")[0]
 
 class graph(QWidget, form_class):
     def __init__(self):
@@ -121,35 +121,39 @@ class graph(QWidget, form_class):
             QMessageBox.information(self, "에러", "데이터를 선택해주세요")
 
     def change_motion(self):
-        try:                                # 데이터 수정할 때 숫자만 입력 가능하게 만들기 위해 숫자일 때만 float형으로 변경
-            change_cell = float(self.old_chart.currentItem().text())
-        except ValueError:
-            change_cell = self.old_chart.currentItem().text()
-        print(change_cell)
-        selected_row = self.old_chart.currentRow()
         selected_col = self.old_chart.currentColumn()
-        selected_list = []
-        for i in range(self.old_chart.columnCount()):           # 선택한 행의 모든 항복 넣기
-            selected_list.append(self.old_chart.item(selected_row, i).text())
-        if type(change_cell) != float:
-            QMessageBox.information(self, "에러", "숫자를 입력하세요")
-        elif change_cell != selected_list[0]:
-            conn = pymysql.connect(host='10.10.21.105', user='test', password='0000', db='population', charset='utf8')
-            cur = conn.cursor()
-            if selected_row == 0:
-                cur.execute(
-                    f'UPDATE old_rate SET {"`" + self.insert_year[selected_col] + "`"} = {change_cell} WHERE 행정구역별 = "{selected_list[0]}"')
-            elif selected_row == 1:
-                cur.execute(
-                    f'UPDATE young_rate SET {"`" + self.insert_year[selected_col] + "`"} = {change_cell} WHERE 행정구역별 = "{selected_list[0]}"')
-            elif selected_row == 2:
-                cur.execute(
-                    f'UPDATE total_rate SET {"`" + self.insert_year[selected_col] + "`"} = {change_cell} WHERE 행정구역별 = "{selected_list[0]}"')
-            conn.commit()
-            conn.close()
-            self.tableSet()
+        if selected_col == -1:
+            QMessageBox.information(self, "에러", "셀을 선택하세요")
         else:
-            QMessageBox.information(self, "에러", "데이터를 선택해주세요")
+            try:                                # 데이터 수정할 때 숫자만 입력 가능하게 만들기 위해 숫자일 때만 float형으로 변경
+                change_cell = float(self.old_chart.currentItem().text())
+            except ValueError:
+                change_cell = self.old_chart.currentItem().text()
+            print(change_cell)
+            selected_row = self.old_chart.currentRow()
+            selected_col = self.old_chart.currentColumn()
+            selected_list = []
+            for i in range(self.old_chart.columnCount()):           # 선택한 행의 모든 항복 넣기
+                selected_list.append(self.old_chart.item(selected_row, i).text())
+            if type(change_cell) != float:
+                QMessageBox.information(self, "에러", "숫자를 입력하세요")
+            elif change_cell != selected_list[0]:
+                conn = pymysql.connect(host='10.10.21.105', user='test', password='0000', db='population', charset='utf8')
+                cur = conn.cursor()
+                if selected_row == 0:
+                    cur.execute(
+                        f'UPDATE old_rate SET {"`" + self.insert_year[selected_col] + "`"} = {change_cell} WHERE 행정구역별 = "{selected_list[0]}"')
+                elif selected_row == 1:
+                    cur.execute(
+                        f'UPDATE young_rate SET {"`" + self.insert_year[selected_col] + "`"} = {change_cell} WHERE 행정구역별 = "{selected_list[0]}"')
+                elif selected_row == 2:
+                    cur.execute(
+                        f'UPDATE total_rate SET {"`" + self.insert_year[selected_col] + "`"} = {change_cell} WHERE 행정구역별 = "{selected_list[0]}"')
+                conn.commit()
+                conn.close()
+                self.tableSet()
+            else:
+                QMessageBox.information(self, "에러", "데이터를 선택해주세요")
 
 
     def tableSet(self):
