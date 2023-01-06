@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="verticalLayoutWidget">
@@ -780,7 +780,7 @@ background-color: rgb(255, 255, 255);
      <x>20</x>
      <y>390</y>
      <width>231</width>
-     <height>181</height>
+     <height>151</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -821,22 +821,6 @@ background-color: rgb(255, 255, 255);
      </property>
      <property name="text">
       <string>국가 1 검색</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_11">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>150</y>
-       <width>181</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>검색단어 관련 국가 리스트 나열</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -1153,6 +1137,29 @@ background-color: rgb(255, 255, 255);
    </property>
    <property name="text">
     <string>검색</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_worldAdd">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>550</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>국가추가</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="led_worldAdd">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>550</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
    </property>
   </widget>
  </widget>
