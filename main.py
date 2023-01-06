@@ -664,15 +664,15 @@ class Population_Db(QWidget, form_class):   # 클래스 선언 Population_Db
         else:
             self.country2.setText(country)
 
-    ########## 시형 메소드 ###################
-
-
+    # --------------------------- 시형 ---------------------------
     # 그래프화면으로 넘어감
     def graph_screen(self):
         self.chartorgraph.setCurrentIndex(0)
+
     # 표화면으로 넘어감
     def chart_screen(self):
         self.chartorgraph.setCurrentIndex(1)
+
     # 검색하면 실행
     def graph_search(self):
         self.region = self.rate_test.currentText()               # 지역에 해당하는 항복별로 그리기 위해
@@ -735,7 +735,6 @@ class Population_Db(QWidget, form_class):   # 클래스 선언 Population_Db
         self.rate_test.addItem(add_region)
         self.tableSet()
 
-
     def del_motion(self):
         selected_cell = self.old_chart.currentItem().text()     # 선택한 셀의 내용을 찾고
         selected_row = self.old_chart.currentRow()              # 로우도 구한다
@@ -793,7 +792,6 @@ class Population_Db(QWidget, form_class):   # 클래스 선언 Population_Db
             else:
                 QMessageBox.information(self, "에러", "데이터를 선택해주세요")
 
-
     def tableSet(self):
         conn = pymysql.connect(host='10.10.21.105', user='test', password='0000', db='population', charset='utf8')
         cur = conn.cursor()
@@ -823,7 +821,6 @@ class Population_Db(QWidget, form_class):   # 클래스 선언 Population_Db
         self.insert_year += year_list[fir_year:sec_year + 1]
         self.old_chart.setColumnCount(len(self.insert_year))
         self.old_chart.setHorizontalHeaderLabels(self.insert_year)
-
 
 
 if __name__ == "__main__":
