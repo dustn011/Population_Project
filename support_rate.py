@@ -6,7 +6,7 @@ from matplotlib import font_manager, rc
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5 import uic, QtWidgets
 
-#ㄴㅁㅇㅁㅈ
+#ㄴㅁㅇㅁㅈㄴㅁㅇㄴㅁㅇ
 font_path = "C:\\Windows\\Fonts\\gulim.ttc"
 font = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font)
