@@ -2,7 +2,7 @@ import pymysql
 import sys
 import matplotlib.pyplot as plt
 import copy
-
+import numpy as np
 
 from matplotlib import font_manager, rc
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -121,59 +121,59 @@ class WorldCpr(QWidget, form_class):
 
     # 수정 버튼 누르면 실행되는 메서드
     def worldChage(self):
-        # DB에 넣어줄 데이터 float형변환 시키기, 형변환 오류 뜨면 그냥 str 타입으로 두고 조건문으로 분기점 주기
-        try:
-            changeData_value = float(self.stats_tableWidget.currentItem().text())
-        except ValueError:
-            changeData_value = self.stats_tableWidget.currentItem().text()
-
-        # float형 데이터 아닐때 경고문구 출력
-        if type(changeData_value) != float:
-            QMessageBox.information(self, '타입 오류', '숫자만 입력해주세요')
         # 선택 안했을 때 경고문구 출력하는 조건문
-        elif self.stats_tableWidget.currentColumn() == -1:
+        if self.stats_tableWidget.currentColumn() == -1:
             QMessageBox.information(self, '선택 오류', '수정할 셀을 선택해주세요')
-        # 국가명은 수정 불가능하게 조건문 달아줌
-        elif self.stats_tableWidget.currentColumn() == 0:
-            QMessageBox.information(self, '수정 불가', '국가명은 수정할 수 없습니다')
-        # 수정 시작
         else:
-            # print(self.stats)
-            # print(self.stats_tableWidget.currentItem().text())
-            # print(self.stats_tableWidget.currentRow())
-            # print(self.stats_tableWidget.currentColumn())
-            # print(self.stats[changeData_idx1][changeData_idx2])
-            # print(column_name, country_name, changeData_value)
+            # DB에 넣어줄 데이터 float형변환 시키기, 형변환 오류 뜨면 그냥 str 타입으로 두고 조건문으로 분기점 주기
+            try:
+                changeData_value = float(self.stats_tableWidget.currentItem().text())
+            except ValueError:
+                changeData_value = self.stats_tableWidget.currentItem().text()
+            # float형 데이터 아닐때 경고문구 출력
+            if type(changeData_value) != float:
+                QMessageBox.information(self, '타입 오류', '숫자만 입력해주세요')
+            # 국가명은 수정 불가능하게 조건문 달아줌
+            elif self.stats_tableWidget.currentColumn() == 0:
+                QMessageBox.information(self, '수정 불가', '국가명은 수정할 수 없습니다')
+            # 수정 시작
+            else:
+                # print(self.stats)
+                # print(self.stats_tableWidget.currentItem().text())
+                # print(self.stats_tableWidget.currentRow())
+                # print(self.stats_tableWidget.currentColumn())
+                # print(self.stats[changeData_idx1][changeData_idx2])
+                # print(column_name, country_name, changeData_value)
 
-            # 선택한 셀의 row 인덱스 저장
-            changeData_idx1 = self.stats_tableWidget.currentRow()
-            # 선택한 셀의 column 인덱스 저장
-            changeData_idx2 = self.stats_tableWidget.currentColumn()
+                # 선택한 셀의 row 인덱스 저장
+                changeData_idx1 = self.stats_tableWidget.currentRow()
+                # 선택한 셀의 column 인덱스 저장
+                changeData_idx2 = self.stats_tableWidget.currentColumn()
 
-            # 데이터의 칼럼명 -> 콤보박스 리스트로 찾기
-            column_name = self.yyitem_list[changeData_idx2 - 1]
-            # 데이터의 국가명 -> 검색한 리스트에서 찾기
-            country_name = self.stats[changeData_idx1][0]
+                # 데이터의 칼럼명 -> 콤보박스 리스트로 찾기
+                column_name = self.yyitem_list[changeData_idx2 - 1]
+                # 데이터의 국가명 -> 검색한 리스트에서 찾기
+                country_name = self.stats[changeData_idx1][0]
 
-            # DB 연결하기
-            conn = pymysql.connect(host='10.10.21.105', user='test', password='0000', db='population', charset='utf8')
-            # DB와 상호작용하기 위해 연결해주는 cursor 객체 만듬
-            cur = conn.cursor()
+                # DB 연결하기
+                conn = pymysql.connect(host='10.10.21.105', user='test', password='0000', db='population', charset='utf8')
+                # DB와 상호작용하기 위해 연결해주는 cursor 객체 만듬
+                cur = conn.cursor()
 
-            # 국가명은 **이고 컬럼은 ****연도인 값에 바꿀 값을 넣고 수정할래
-            sql = f"UPDATE popu_test SET {column_name} = {changeData_value} WHERE 국가별 = '{country_name}'"
+                # 국가명은 **이고 컬럼은 ****연도인 값에 바꿀 값을 넣고 수정할래
+                sql = f"UPDATE popu_test SET {column_name} = {changeData_value} WHERE 국가별 = '{country_name}'"
 
-            # execute 메서드로 db에 sql 문장 전송
-            cur.execute(sql)
+                # execute 메서드로 db에 sql 문장 전송
+                cur.execute(sql)
 
-            # commit을 수행하면 하나의 트렌젝션 과정을 종료하게 된다고 함
-            conn.commit()
-            # DB 닫아주기
-            conn.close()
+                # commit을 수행하면 하나의 트렌젝션 과정을 종료하게 된다고 함
+                conn.commit()
+                # DB 닫아주기
+                conn.close()
 
-            # 바로 테이블 위젯에 적용시키게 메서드 실행
-            self.dbtoCompare()
-            self.statsTable()
+                # 바로 테이블 위젯에 적용시키게 메서드 실행
+                self.dbtoCompare()
+                self.statsTable()
 
     # 삭제 버튼 누르면 실행되는 메서드
     def worldDelete(self):
@@ -248,10 +248,9 @@ class WorldCpr(QWidget, form_class):
     def graphWgt(self):
         # 이전에 만든 그래프 지우기
         self.world_graph.cla()
-        # ---------- 그래프 만들기 ----------
 
         # x축 데이터(콤보박스로 지정한 연도 범위)
-        x = self.yyitem_list[self.idx1: self.idx2 + 1]
+        x_year = self.yyitem_list[self.idx1: self.idx2 + 1]
 
         # y축 데이터(국가1, 국가2 인구성장률 수치), 튜플값은 바꿀 수 없으니 리스트로 변환
         y1 = list(copy.deepcopy(self.stats[0]))
@@ -283,21 +282,20 @@ class WorldCpr(QWidget, form_class):
         else:
             y_max = max(y1)
 
-        # x축은 지정한 연도 범위 갯수만큼 길이 지정, y축은 인구성장률 최솟값, 최댓값으로 길이 지정
-        self.world_graph.axis([-1.5, len(x), y_min-1, y_max+1])
+        # 바탕에 격자 넣기 gird를 True로, y축 격자만 나오게 할려면 ", axis = 'y'" 추가해주면 됨
+        self.world_graph.grid(True, axis = 'y')
 
-        # (x1, y1), (x2, y2) 지정 그래프 2개 만들기
-        self.world_graph.plot(x, y1, label=f'{self.stats[0][0]}', marker=".")     # 라벨 이름 - 해당 국가로
-        self.world_graph.plot(x, y2, label=f'{self.stats[1][0]}', marker=".")     # . 으로 마커 지정
-
-        # 그래프 x축 기울여서 표시하기, rotation=45 <- 45도 기울인다
-        # self.world_graph.tick_params(axis='x', rotation=30, labelsize=7)
+        # 연도 범위 갯수만큼 x축 만들기
+        self.world_graph.set_xticks([i for i in range(len(x_year))])
+        # x축 이름 만들어주기(label정하기)
+        self.world_graph.set_xticklabels(x_year)
+        a = np.arange(len(x_year))
+        # 막대그래프 만들기,
+        self.world_graph.bar(a, y1, width=0.3, alpha=0.4, color='red', label=f'{self.stats[0][0]}')
+        self.world_graph.bar(a+0.3, y2, width=0.3, alpha=0.4, color='green', label=f'{self.stats[1][0]}')
 
         # 범례 왼쪽 가운데에 표시
-        self.world_graph.legend(loc='center left')
-
-        # 바탕에 격자 넣기 gird는 True로, axis = 'y'해서 y축 격자만 나오게 함
-        self.world_graph.grid(True, axis = 'y')
+        self.world_graph.legend(loc=(0.01, 0.8))
 
         self.canvas.draw()
 
