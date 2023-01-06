@@ -38,7 +38,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
 
         conn = pymysql.connect(host='10.10.21.105', user='TT1', password='0000', db='population', charset='utf8') # MY SQL 데이터 불러옴
         c = conn.cursor()
-        c.execute("SELECT *FROM population.test_table")# korea_birth table 조회
+        c.execute("SELECT *FROM population.korea_birth") # korea_birth 조회
 
         self.birth = c.fetchall()
         for i in self.birth:
@@ -145,7 +145,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
             conn = pymysql.connect(host='10.10.21.105', user='TT1', password='0000', db='population',
                                    charset='utf8')  # MY SQL 데이터 불러옴
             c = conn.cursor()
-            sql = f"INSERT INTO test_table (시군구별) VALUES ('{addcity_name}')";
+            sql = f"INSERT INTO korea_birth (시군구별) VALUES ('{addcity_name}')";
             c.execute(sql)
             conn.commit()
             conn.close()
@@ -165,7 +165,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         else:
             conn = pymysql.connect(host='10.10.21.105', user='TT1', password='0000', db='population', charset='utf8') # MY SQL 데이터 불러옴
             c = conn.cursor()
-            sql=f"UPDATE test_table SET {year} = {birth_rate} WHERE 시군구별 = '{city_name}'";
+            sql=f"UPDATE korea_birth SET {year} = {birth_rate} WHERE 시군구별 = '{city_name}'";
             c.execute(sql)
             conn.commit()
             conn.close()
@@ -181,7 +181,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
             conn = pymysql.connect(host='10.10.21.105', user='TT1', password='0000', db='population',
                                    charset='utf8')  # MY SQL 데이터 불러옴
             c = conn.cursor()
-            sql = f"DELETE FROM test_table WHERE 시군구별 = '{delcity_name}'";
+            sql = f"DELETE FROM korea_birth WHERE 시군구별 = '{delcity_name}'";
             c.execute(sql)
             conn.commit()
             conn.close()
@@ -223,10 +223,10 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         conn = pymysql.connect(host='10.10.21.105', user='TT1', password='0000', db='population',
                                charset='utf8')  # MY SQL 데이터 불러옴
         c = conn.cursor()
-        sql = "SELECT *FROM population.test_table WHERE 시군구별 = %s "; # self.city_comboBox.currentText()를 조회하기 위해서
+        sql = "SELECT *FROM population.korea_birth WHERE 시군구별 = %s "; # self.city_comboBox.currentText()를 조회하기 위해서
         c.execute(sql, self.word1)
         self.info = c.fetchall()
-        c.execute("SELECT *FROM population.test_table WHERE 시군구별 = '전국'") #self.city_comboBox.currentText()가 전국인 테이터 조회
+        c.execute("SELECT *FROM population.korea_birth WHERE 시군구별 = '전국'") #self.city_comboBox.currentText()가 전국인 테이터 조회
         city_avg=c.fetchall()
         print(self.info)
         conn.commit()
