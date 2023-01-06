@@ -63,7 +63,7 @@ class Population_Db(QWidget, form_class): # 클래스 선언 Birth_Rate
         self.del_button.clicked.connect(self.del_data)
 
 
-##### ####### 연수
+##### ####### 연수zxc
         # ---------- 그래프 캔버스 ----------
 
         self.fig = plt.Figure()
